@@ -887,41 +887,441 @@
       color: var(--text-dim);
     }
 
-    /* Mobile Responsive */
+    /* Mobile Responsive & Polish */
+    .mobile-menu-btn {
+      display: none;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-card);
+      color: var(--text-white);
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+      padding: 0;
+    }
+    .mobile-menu-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--border-focus);
+    }
+
+    .mobile-search-btn {
+      display: none;
+      background: #111114;
+      border: 1px solid var(--border-card);
+      color: var(--text-muted);
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+      padding: 0;
+    }
+    .mobile-search-btn:hover {
+      background: #18181b;
+      color: #fff;
+      border-color: var(--border-focus);
+    }
+
+    /* Sidebar Drawer Backdrop */
+    .sidebar-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      z-index: 140;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s ease, visibility 0.25s ease;
+      pointer-events: none;
+    }
+    .sidebar-backdrop.open {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    .sidebar-mobile-header {
+      display: none;
+    }
+
+    body.sidebar-locked, body.modal-locked {
+      overflow: hidden !important;
+    }
+
     @media (max-width: 1100px) {
       aside.toc-nav {
-        display: none;
+        display: none !important;
       }
       main.main-content {
-        margin-right: 0;
-        max-width: 100%;
+        margin-right: 0 !important;
+        max-width: 100% !important;
       }
     }
 
     @media (max-width: 768px) {
-      aside.sidebar {
-        transform: translateX(-100%);
-        transition: transform 0.2s ease;
+      /* Prevent horizontal viewport spill */
+      html, body {
+        overflow-x: hidden !important;
+        width: 100% !important;
+        max-width: 100vw !important;
+        position: relative;
       }
-      aside.sidebar.open {
-        transform: translateX(0);
+
+      /* Clean Mobile Header */
+      .header {
+        padding: 0 14px !important;
+        height: 56px !important;
       }
-      main.main-content {
-        margin-left: 0;
-        padding: 24px 20px;
+
+      .header-left {
+        gap: 10px !important;
+        flex-shrink: 0;
       }
+
       .mobile-menu-btn {
-        display: block !important;
+        display: flex !important;
+      }
+
+      .brand-title {
+        font-size: 15.5px !important;
+        gap: 6px !important;
+      }
+
+      .brand-badge {
+        font-size: 10px !important;
+        padding: 1px 5px !important;
+      }
+
+      /* Eliminate header collision: Hide desktop search bar on mobile */
+      .header-center {
+        display: none !important;
+      }
+
+      /* Show mobile search icon in right header */
+      .mobile-search-btn {
+        display: flex !important;
+      }
+
+      .header-right {
+        gap: 8px !important;
+        flex-shrink: 0;
+      }
+
+      .lang-btn {
+        padding: 6px 9px !important;
+        font-size: 12px !important;
+        gap: 5px !important;
+        height: 36px !important;
+      }
+
+      .lang-dropdown {
+        right: 0 !important;
+        width: min(230px, calc(100vw - 24px)) !important;
+        max-height: 380px !important;
+      }
+
+      /* Modern Slide-out Sidebar Drawer */
+      aside.sidebar {
+        position: fixed !important;
+        top: 0 !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        width: min(300px, 84vw) !important;
+        background: #09090c !important;
+        border-right: 1px solid var(--border-card) !important;
+        box-shadow: 12px 0 35px rgba(0, 0, 0, 0.85) !important;
+        z-index: 150 !important;
+        transform: translateX(-100%) !important;
+        transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        padding: 16px 12px 60px !important;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      aside.sidebar.open {
+        transform: translateX(0) !important;
+      }
+
+      .sidebar-mobile-header {
+        display: flex !important;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 4px 14px 4px;
+        margin-bottom: 12px;
+        border-bottom: 1px solid var(--border-subtle);
+      }
+
+      .sidebar-mobile-brand {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--text-white);
+      }
+
+      .sidebar-close-btn {
+        background: #18181b;
+        border: 1px solid var(--border-card);
+        color: var(--text-muted);
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.15s ease;
+      }
+      .sidebar-close-btn:hover {
+        background: #27272a;
+        color: #fff;
+      }
+
+      /* Main Content Responsive Layout */
+      main.main-content {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        width: 100% !important;
+        max-width: 100vw !important;
+        padding: 18px 16px 80px !important;
+        box-sizing: border-box !important;
+      }
+
+      .content-header-top {
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+        margin-bottom: 8px !important;
+      }
+
+      .breadcrumb-nav {
+        font-size: 11.5px !important;
+        flex-wrap: wrap !important;
+      }
+
+      .content-title-row {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 6px !important;
+        margin-bottom: 10px !important;
+      }
+
+      .content-title {
+        font-size: 24px !important;
+        line-height: 1.25 !important;
+        word-break: break-word;
+      }
+
+      .content-badges {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 6px !important;
+        align-items: center !important;
+      }
+
+      .content-description {
+        font-size: 13.5px !important;
+        line-height: 1.55 !important;
+        margin-bottom: 18px !important;
+      }
+
+      .callout-banner {
+        padding: 12px 14px !important;
+        font-size: 12.5px !important;
+        gap: 10px !important;
+        margin-bottom: 22px !important;
+        border-radius: 8px !important;
+      }
+
+      /* Signature Card - Touch Friendly & Clean */
+      .signature-card {
+        padding: 12px 14px !important;
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        gap: 10px !important;
+        margin-bottom: 18px !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+      }
+
+      .signature-card code {
+        overflow-x: auto !important;
+        white-space: nowrap !important;
+        font-size: 12px !important;
+        flex: 1;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 2px;
+      }
+
+      .signature-card .copy-icon-btn {
+        flex-shrink: 0 !important;
+      }
+
+      /* Parameters Container */
+      .params-container {
+        margin-bottom: 24px !important;
+        border-radius: 8px !important;
+      }
+
+      .param-row {
+        padding: 12px 14px !important;
+        gap: 6px !important;
+      }
+
+      .param-top {
+        gap: 6px !important;
+        row-gap: 6px !important;
+      }
+
+      .param-key {
+        font-size: 12.5px !important;
+        word-break: break-all !important;
+      }
+
+      .param-type-badge {
+        font-size: 10.5px !important;
+        padding: 1px 5px !important;
+      }
+
+      .param-default-badge {
+        font-size: 10.5px !important;
+        word-break: break-all !important;
+      }
+
+      .param-desc {
+        font-size: 12.5px !important;
+        line-height: 1.5 !important;
+      }
+
+      /* Mechanism Card */
+      .mechanism-card {
+        padding: 14px 16px !important;
+        font-size: 13px !important;
+        line-height: 1.6 !important;
+        margin-bottom: 24px !important;
+        border-radius: 8px !important;
+        word-break: break-word !important;
+      }
+
+      /* Code Block Box */
+      .code-box {
+        margin-bottom: 30px !important;
+        border-radius: 8px !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+      }
+
+      .code-box-header {
+        top: 8px !important;
+        right: 10px !important;
+      }
+
+      pre.code-content {
+        padding: 14px !important;
+        font-size: 11.5px !important;
+        line-height: 1.6 !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+      }
+
+      /* Pagination Navigation */
+      .pagination-nav {
+        flex-direction: column !important;
+        gap: 10px !important;
+        padding-top: 20px !important;
+        margin-top: 28px !important;
+      }
+
+      .page-nav-link {
+        width: 100% !important;
+        padding: 11px 14px !important;
+        background: rgba(17, 17, 20, 0.85) !important;
+        border: 1px solid var(--border-card) !important;
+        border-radius: 8px !important;
+        box-sizing: border-box !important;
+        justify-content: center !important;
+        font-size: 13px !important;
+      }
+
+      /* Doc Footer */
+      .doc-footer {
+        padding-top: 24px !important;
+        margin-top: 14px !important;
+        padding-bottom: 30px !important;
+      }
+
+      /* Search Modal Mobile */
+      .search-modal-backdrop {
+        padding: 16px 12px !important;
+        padding-top: 45px !important;
+        align-items: flex-start !important;
+      }
+
+      .search-modal-box {
+        width: 100% !important;
+        max-height: 80vh !important;
+        border-radius: 12px !important;
+      }
+
+      .search-modal-input-wrap {
+        padding: 12px 14px !important;
+      }
+
+      .search-modal-input {
+        font-size: 14px !important;
+      }
+
+      .search-modal-results {
+        max-height: calc(80vh - 65px) !important;
+        padding: 6px !important;
+      }
+
+      .search-result-item {
+        padding: 10px 12px !important;
+      }
+
+      .search-result-title {
+        font-size: 13.5px !important;
+      }
+
+      .search-result-desc {
+        font-size: 11.5px !important;
       }
     }
 
-    .mobile-menu-btn {
-      display: none;
-      background: transparent;
-      border: none;
-      color: var(--text-white);
-      font-size: 18px;
-      cursor: pointer;
+    @media (max-width: 420px) {
+      .header {
+        padding: 0 10px !important;
+      }
+      .header-left {
+        gap: 6px !important;
+      }
+      .brand-title {
+        font-size: 14.5px !important;
+      }
+      .header-right {
+        gap: 6px !important;
+      }
+      .lang-btn {
+        padding: 6px 7px !important;
+        font-size: 11px !important;
+      }
+      #currentLangLabel {
+        max-width: 58px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
     }
 
     /* Language Selector Styles */
@@ -1075,7 +1475,7 @@
   <!-- Top Header Navigation (Matches Potassium / Mintlify) -->
   <header class="header">
     <div class="header-left">
-      <button class="mobile-menu-btn" id="mobileMenuToggle" aria-label="Toggle Menu">☰</button>
+      <button class="mobile-menu-btn" id="mobileMenuToggle" aria-label="Toggle Menu"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
       <a href="#intro" class="brand-title" onclick="loadModule('intro')">
         WASOR
         <span class="brand-badge">v3.7</span>
@@ -1093,6 +1493,11 @@
     </div>
 
         <div class="header-right">
+      <!-- Mobile Search Icon Button -->
+      <button class="mobile-search-btn" id="mobileSearchBtn" aria-label="Search" onclick="openSearch()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      </button>
+
       <!-- Language Switcher Dropdown (10 Languages) -->
       <div class="lang-selector-wrap" id="langSelectorWrap">
         <button class="lang-btn" id="langBtn" aria-label="Select Language" onclick="toggleLangDropdown()">
@@ -1194,8 +1599,22 @@
   </header>
 
   <div class="layout-container">
+    <!-- Mobile Sidebar Backdrop Overlay -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
     <!-- Left Sidebar (Accordion Structure with Category Count & Status Badges) -->
     <aside class="sidebar" id="sidebar">
+      <!-- Mobile Sidebar Top Header with Close Button -->
+      <div class="sidebar-mobile-header">
+        <div class="sidebar-mobile-brand">
+          <span>WASOR Docs</span>
+          <span class="brand-badge">v3.7</span>
+        </div>
+        <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close Navigation">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
       <div class="sidebar-group-header">API Reference</div>
       
       <a class="sidebar-nav-item" id="nav-intro" onclick="loadModule('intro')">
@@ -4901,6 +5320,10 @@ S.DisabledModules["no_recoil"] = true`,
 
       // Scroll smoothly to top
       window.scrollTo({ top: 0, behavior: 'instant' });
+      // Auto close mobile drawer on navigation
+      if (window.innerWidth <= 768) {
+        closeSidebar();
+      }
     }
 
     // Format Signature
@@ -4947,12 +5370,41 @@ S.DisabledModules["no_recoil"] = true`,
       folder.classList.toggle("open");
     }
 
-    // Mobile Menu
+    // Mobile Menu & Sidebar Drawer
     const mobileBtn = document.getElementById("mobileMenuToggle");
     const sidebar = document.getElementById("sidebar");
-    mobileBtn.addEventListener("click", () => {
-      sidebar.classList.toggle("open");
-    });
+    const sidebarBackdrop = document.getElementById("sidebarBackdrop");
+    const sidebarCloseBtn = document.getElementById("sidebarCloseBtn");
+
+    function openSidebar() {
+      if (sidebar) sidebar.classList.add("open");
+      if (sidebarBackdrop) sidebarBackdrop.classList.add("open");
+      document.body.classList.add("sidebar-locked");
+    }
+
+    function closeSidebar() {
+      if (sidebar) sidebar.classList.remove("open");
+      if (sidebarBackdrop) sidebarBackdrop.classList.remove("open");
+      document.body.classList.remove("sidebar-locked");
+    }
+
+    if (mobileBtn) {
+      mobileBtn.addEventListener("click", () => {
+        if (sidebar && sidebar.classList.contains("open")) {
+          closeSidebar();
+        } else {
+          openSidebar();
+        }
+      });
+    }
+
+    if (sidebarCloseBtn) {
+      sidebarCloseBtn.addEventListener("click", closeSidebar);
+    }
+
+    if (sidebarBackdrop) {
+      sidebarBackdrop.addEventListener("click", closeSidebar);
+    }
 
     // Search Modal
     const searchBtn = document.getElementById("searchButton");
@@ -4961,14 +5413,19 @@ S.DisabledModules["no_recoil"] = true`,
     const modalResults = document.getElementById("modalResults");
 
     function openSearch() {
+      closeSidebar();
       searchBackdrop.classList.add("open");
+      document.body.classList.add("modal-locked");
       modalInput.value = "";
       renderSearchResults("");
-      modalInput.focus();
+      setTimeout(() => {
+        modalInput.focus();
+      }, 50);
     }
 
     function closeSearch() {
       searchBackdrop.classList.remove("open");
+      document.body.classList.remove("modal-locked");
     }
 
     searchBtn.addEventListener("click", openSearch);
@@ -4982,6 +5439,7 @@ S.DisabledModules["no_recoil"] = true`,
         openSearch();
       } else if (e.key === "Escape") {
         closeSearch();
+        closeSidebar();
       }
     });
 
